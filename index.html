@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="text" href="icon.png" />
-  <title>Bulding 2 Bell</title>
+  <title>Building Bell</title>
 
   <style>
     body {
@@ -70,14 +70,13 @@
 
     /* === Schedule table styling === */
     .scheduleTable {
-      width: 90vw;
-      max-width: 900px;
+      width: 70vw;
       margin-top: 2vh;
       background-color: rgba(0, 0, 0, 0.6);
       color: white;
       border-radius: 12px;
       border-collapse: collapse;
-      font-size: 18px;
+      font-size: 3vw;
       overflow: hidden;
     }
 
@@ -147,17 +146,18 @@
         </tr>
       </tbody>
     </table>
-
-    <select id="url-navigator" onchange="navigateToUrl(this)" class="scheduleTable">
-        <option value="1.html" >1st Building</option>
-        <option value="index.html" selected >2nd Building</option>
+    <select id="url-navigator" onchange="navigateToBuilding(this)" class="scheduleTable">
+        <option value="1">1st Building</option>
+        <option value="2">2nd Building</option>
     </select>
-    <script>
-      function navigateToUrl(dropdown) {
-            const targetUrl = dropdown.value;
-            if (targetUrl) {window.location.href = targetUrl;}
-        }
-    </script>
+
+    <div style="margin-top: 10px;">
+      <label style="font-size: 4vw; font-weight: 700; text-transform: none;">
+        <input type="checkbox" id="soundBeep" style="transform: scale(4); margin-right: 8px;">
+        🔊 Bell Beep
+      </label>
+    </div>
+
     <!-- Daily schedule table -->
     <table id="dailySchedule" class="scheduleTable">
       <thead>
@@ -170,8 +170,67 @@
     </table>
 
     <script>
-      const regularSchedule = [
-        { time: "00:00:01", name: "Before School" },
+const regularSchedule = [
+{ time: "00:00:01", name: "Before School" },
+        { time: "07:45:00", name: "Period 1" },
+        { time: "08:46:00", name: "Passing" },
+        { time: "08:51:00", name: "Period 2" },
+        { time: "09:48:00", name: "Passing" },
+        { time: "09:53:00", name: "Period 3" },
+        { time: "10:50:00", name: "Passing" },
+        { time: "10:55:00", name: "Period 4" },
+        { time: "11:52:00", name: "Passing" },
+        { time: "11:57:00", name: "Lunch 1" },
+        { time: "12:22:00", name: "Passing" },
+        { time: "12:27:00", name: "6 Period" },
+        { time: "13:24:00", name: "Passing" },
+        { time: "13:29:00", name: "Period 7" },
+        { time: "14:26:00", name: "Passing" },
+        { time: "14:31:00", name: "Period 8" },
+        { time: "15:28:00", name: "Dismissal/Tutorials" },
+        { time: "16:00:00", name: "After Clubs" },
+        { time: "17:00:00", name: "After school" },
+        { time: "23:31:59", name: "Midnight" }
+];
+
+const fridaySchedule = [
+{ time: "00:00:01", name: "Before School" },
+        { time: "07:45:00", name: "Period 1" },
+        { time: "08:23:00", name: "Passing" },
+        { time: "08:28:00", name: "Period 2" },
+        { time: "09:06:00", name: "Passing" },
+        { time: "09:11:00", name: "Period 3" },
+        { time: "09:49:00", name: "Passing" },
+        { time: "09:54:00", name: "Period 4" },
+        { time: "10:32:00", name: "Passing" },
+        { time: "10:37:00", name: "Lunch 1" },
+        { time: "11:02:00", name: "Passing" },
+        { time: "11:07:00", name: "6 Period" },
+        { time: "11:45:00", name: "Passing" },
+        { time: "11:50:00", name: "Period 7" },
+        { time: "12:28:00", name: "Passing" },
+        { time: "12:33:00", name: "Period 8" },
+        { time: "13:11:00", name: "Dismissal" },
+        { time: "13:30:00", name: "After School" },
+        { time: "23:31:59", name: "Midnight" }
+];
+
+const saturdaySchedule = [
+{ time: "00:00:01", name: "Before School" },
+        { time: "09:00:00", name: "1st Tutorial" },
+        { time: "10:30:00", name: "Passing" },
+        { time: "10:35:00", name: "2nd Tutorial" },
+        { time: "12:00:00", name: "Dismissal" },
+        { time: "12:30:00", name: "No School Event" }
+];
+
+const sundaySchedule = [
+{ time: "00:00:01", name: "Before School" },
+        { time: "09:00:00", name: "No School Today" }
+];
+
+const regularScheduleB2 = [
+{ time: "00:00:01", name: "Before School" },
         { time: "07:45:00", name: "Period 1" },
         { time: "08:46:00", name: "Passing" },
         { time: "08:51:00", name: "Period 2" },
@@ -191,10 +250,10 @@
         { time: "16:00:00", name: "After Clubs" },
         { time: "17:00:00", name: "After school" },
         { time: "23:31:59", name: "Midnight" }
-      ];
+];
 
-      const fridaySchedule = [
-        { time: "00:00:01", name: "Before School" },
+const fridayScheduleB2 = [
+{ time: "00:00:01", name: "Before School" },
         { time: "07:45:00", name: "Period 1" },
         { time: "08:23:00", name: "Passing" },
         { time: "08:28:00", name: "Period 2" },
@@ -213,28 +272,107 @@
         { time: "13:11:00", name: "Dismissal" },
         { time: "13:30:00", name: "After School" },
         { time: "23:31:59", name: "Midnight" }
-      ];
+];
 
-      const saturdaySchedule = [
-        { time: "00:00:01", name: "Before School" },
+const saturdayScheduleB2 = [
+{ time: "00:00:01", name: "Before School" },
         { time: "09:00:00", name: "1st Tutorial" },
         { time: "10:30:00", name: "Passing" },
         { time: "10:35:00", name: "2nd Tutorial" },
         { time: "12:00:00", name: "Dismissal" },
         { time: "12:30:00", name: "No School Event" }
-      ];
+];
 
-      const sundaySchedule = [
-        { time: "00:00:01", name: "Before School" },
+const sundayScheduleB2 = [
+{ time: "00:00:01", name: "Before School" },
         { time: "09:00:00", name: "No School Today" }
-      ];
+];
+
+
+      // Building is selected from the URL:
+      // index_merged.html        -> Building 2 (default)
+      // index_merged.html?b=1    -> Building 1
+      // index_merged.html?b=2    -> Building 2
+      const params = new URLSearchParams(window.location.search);
+      const building = params.get("b") === "1" ? 1 : 2;
+
+      const buildingSchedules = {
+        1: {
+          regular: regularSchedule,
+          friday: fridaySchedule,
+          saturday: saturdaySchedule,
+          sunday: sundaySchedule
+        },
+        2: {
+          regular: regularScheduleB2,
+          friday: fridayScheduleB2,
+          saturday: saturdayScheduleB2,
+          sunday: sundayScheduleB2
+        }
+      };
 
       function pickSchedule(now) {
         const day = now.getDay();
-        if (day === 5) return fridaySchedule;   // Friday
-        if (day === 6) return saturdaySchedule; // Saturday
-        if (day === 0) return sundaySchedule;   // Sunday
-        return regularSchedule;                 // Mon-Thu
+        const schedules = buildingSchedules[building];
+
+        if (day === 5) return schedules.friday;
+        if (day === 6) return schedules.saturday;
+        if (day === 0) return schedules.sunday;
+        return schedules.regular;
+      }
+
+      // === Sound beep ===
+      let audioContext = null;
+      let lastNextBellTime = null;
+
+      function playBeep() {
+        const checkbox = document.getElementById("soundBeep");
+        if (!checkbox || !checkbox.checked) return;
+
+        try {
+          if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          }
+
+          if (audioContext.state === "suspended") {
+            audioContext.resume();
+          }
+
+          const oscillator = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+
+          oscillator.type = "sine";
+          oscillator.frequency.value = 880;
+
+          gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.25, audioContext.currentTime + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.18);
+
+          oscillator.connect(gain);
+          gain.connect(audioContext.destination);
+
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.2);
+        } catch (e) {
+          console.log("Beep could not be played:", e);
+        }
+      }
+
+      function updateBuildingSelector() {
+        const selector = document.getElementById("url-navigator");
+        selector.value = String(building);
+        document.title = `Building ${building} Bell`;
+      }
+
+      function navigateToBuilding(dropdown) {
+        const target = dropdown.value;
+        if (target === "1" || target === "2") {
+          const url = new URL(window.location.href);
+          url.search = "";
+          if (target === "1") url.searchParams.set("b", "1");
+          else url.searchParams.set("b", "2");
+          window.location.href = url.toString();
+        }
       }
 
       function renderSchedule(schedule, currentTime) {
@@ -276,6 +414,14 @@
         const nextBell = schedule.find(item => item.time > currentTime);
         const currentBell = schedule.findLast(item => item.time < currentTime) || schedule[0];
 
+        // Beep once when the displayed next bell changes.
+        if (nextBell && nextBell.time !== lastNextBellTime) {
+          if (lastNextBellTime !== null) {
+            playBeep();
+          }
+          lastNextBellTime = nextBell.time;
+        }
+
         if (nextBell) {
           const nextBellTime = new Date(`${now.toDateString()} ${nextBell.time}`);
           const countdown = Math.floor((nextBellTime - now) / 1000);
@@ -296,6 +442,20 @@
           document.getElementById("nextBellTime").innerText = " ";
         }
       }
+
+      updateBuildingSelector();
+
+      document.getElementById("soundBeep").addEventListener("change", function () {
+        if (this.checked) {
+          try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            audioContext.resume();
+            playBeep();
+          } catch (e) {
+            console.log("Audio is not supported by this browser.");
+          }
+        }
+      });
 
       // Run immediately and then every second
       updateDisplay();
