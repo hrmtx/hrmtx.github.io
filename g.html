@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Days to Graduation</title>
+<style>
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0057B8;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .countdown {
+        text-align: center;
+    }
+
+    .number {
+        font-size: clamp(140px, 28vw, 360px);
+        line-height: .85;
+        font-weight: 900;
+        letter-spacing: -8px;
+    }
+
+    .label {
+        margin-top: 35px;
+        font-size: clamp(28px, 5vw, 64px);
+        font-weight: 800;
+        letter-spacing: 8px;
+    }
+</style>
+</head>
+<body>
+<table><tr><td></td>
+ 
+<div class="countdown">
+    <div id="days" class="number"></div><td></td>
+    <div class="label">DAYS TO GRADUATION</div>
+</div>
+ </tr></table>
+<script>
+function updateCountdown() {
+    const today = new Date();
+
+    // Graduation: May 29, 2027
+    const graduation = Date.UTC(2027, 4, 29);
+
+    const todayUTC = Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+    );
+
+    const days = Math.max(
+        0,
+        Math.ceil((graduation - todayUTC) / 86400000)
+    );
+
+    document.getElementById("days").textContent = days;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 60000);
+</script>
+
+</body>
+</html>
